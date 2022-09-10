@@ -75,7 +75,7 @@ namespace MISA.CUKCUK.Common.Entities
         /// <summary>
         /// hiển thị trên màn hình menu
         /// </summary>
-        public int? showOneMenu { get; set; }
+        public int? showOnMenu { get; set; }
 
         /// <summary>
         /// url ảnh đại diện
@@ -85,6 +85,6 @@ namespace MISA.CUKCUK.Common.Entities
         /// <summary>
         /// list danh sách các sở thích phục vụ
         /// </summary>
-        public List<ServiceHobby>? ServiceHobbies { get; set; }
+        public List<FoodServiceHobby>? ServiceHobbies { get; set; }
     }
 }

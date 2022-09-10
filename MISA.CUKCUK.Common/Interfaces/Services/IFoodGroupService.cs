@@ -13,6 +13,5 @@ namespace MISA.CUKCUK.Common.Interfaces.Services
     /// Created by: PQKHANH(29/08/2022)
     public interface IFoodGroupService : IBaseService<FoodGroup>
     {
-
     }
 }

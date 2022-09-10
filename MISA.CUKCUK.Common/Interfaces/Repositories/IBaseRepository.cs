@@ -33,24 +33,35 @@ namespace MISA.CUKCUK.Common.Interfaces.Repositories
         /// Thêm bản ghi dữ liệu
         /// </summary>
         /// <param name="entity">Dữ liệu bản ghi cần thêm</param>
-        /// <returns>Trả về số bản ghi đã thêm</returns>
+        /// <returns>Trả về id bản ghi đã thêm</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int Insert(T entity);
+        public Guid Insert(T entity);
 
         /// <summary>
         /// Sửa bản ghi dữ liệu
         /// </summary>
         /// <param name="entity">Dữ liệu bản ghi cần sửa</param>
-        /// <returns>Trả về số bản ghi đã sửa</returns>
+        /// <returns>Trả về id bản ghi đã sửa</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int Update(T entity, Guid id);
+        public Guid Update(T entity, Guid id);
 
         /// <summary>
         /// Xóa bản ghi dữ liệu
         /// </summary>
         /// <param name="id">Id của bản ghi cần xóa</param>
-        /// <returns>Trả về số bản ghi đã xóa</returns>
+        /// <returns>Trả về id bản ghi đã xóa</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int Delete(Guid id);
+        public  Guid Delete(Guid id);
+
+        /// <summary>
+        /// Kiểm tra trùng
+        /// </summary>
+        /// <param name="id">id bản ghi cần kiển tra</param>
+        /// <param name="text">bản ghi cần kiểm tra</param>
+        /// <param name="ColumnName">Cột cần kiểm tra</param>
+        /// <param name="TableName">bảng cần kiểm tra</param>
+        /// <returns>true- đã tồn tại, false- chưa tồn tại</returns>
+        /// Created by: PQKHANH(29/08/2022)
+        public bool CheckDuplicate(Guid? id, string text, string ColumnName, string TableName);
     }
 }

@@ -18,8 +18,23 @@ namespace MISA.CUKCUK.Common.Entities
         public Guid? FoodId { get; set; }
 
         /// <summary>
+        /// tên món ăn
+        /// </summary>
+        public string? FoodName { get; set; }
+
+        /// <summary>
         /// id sở thích
         /// </summary>
         public Guid? ServiceHobbyId { get; set; }
+
+        /// <summary>
+        /// tên sở thích phục vụ
+        /// </summary>
+        public string? ServiceHobbyName { get; set; }
+
+        /// <summary>
+        /// Phí thu thêm
+        /// </summary>
+        public string? Fee { get; set; }
     }
 }

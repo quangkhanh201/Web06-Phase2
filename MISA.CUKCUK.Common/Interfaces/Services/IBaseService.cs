@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.CUKCUK.Common.Entities.Others;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,7 @@ namespace MISA.CUKCUK.Common.Interfaces.Services
         /// <param name="entity">Dữ liệu bản ghi cần thêm</param>
         /// <returns>Trả về số bản ghi đã thêm</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int InsertService(T entity);
+        public RespondObject InsertService(T entity);
 
         /// <summary>
         /// Sửa bản ghi dữ liệu
@@ -43,7 +44,7 @@ namespace MISA.CUKCUK.Common.Interfaces.Services
         /// <param name="id">id bản ghi cần sửa</param>
         /// <returns>Trả về số bản ghi đã sửa</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int UpdateService(T entity, Guid id);
+        public RespondObject UpdateService(T entity, Guid id);
 
         /// <summary>
         /// Xóa bản ghi dữ liệu
@@ -51,6 +52,6 @@ namespace MISA.CUKCUK.Common.Interfaces.Services
         /// <param name="id">Id của bản ghi cần xóa</param>
         /// <returns>Trả về số bản ghi đã xóa</returns>
         /// Created by: PQKHANH(29/08/2022)
-        public int DeleteService(Guid id);
+        public RespondObject DeleteService(Guid id);
     }
 }
