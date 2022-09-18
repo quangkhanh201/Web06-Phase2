@@ -92,7 +92,7 @@ namespace MISA.CUKCUK.BLL.Services
             for(int i = 0; i < filterObjects.Length; i++)
             {
                 FilterObject filterObject = filterObjects[i];
-                if(filterObject == null)
+                if(filterObject == null || string.IsNullOrEmpty(filterObject.Value) || filterObject.Value == "")
                 {
                     continue;
                 }
@@ -126,7 +126,7 @@ namespace MISA.CUKCUK.BLL.Services
                 }
                 if(filterObject.InputType == InputType.Number)
                 {
-                    if(filterObject.Operator == Operator.Equal)
+                    if (filterObject.Operator == Operator.Equal)
                     {
                         whereClause += filterObject.ColumnFilter + " = '" + filterObject.Value + "' ";
                     }
@@ -148,7 +148,10 @@ namespace MISA.CUKCUK.BLL.Services
                     }
                 }
             }
-            whereClause = "WHERE " + whereClause;
+            if(filterObjects.Length != 0 && whereClause != "")
+            {
+                whereClause = "WHERE " + whereClause;
+            }
 
             if(string.IsNullOrEmpty(sortBy))
             {
@@ -164,11 +167,11 @@ namespace MISA.CUKCUK.BLL.Services
         /// <summary>
         /// Xử lý upload ảnh lên backend
         /// </summary>
-        /// <param name="id">id của bản ghi ảnh tương ứng</param>
+        /// <param name="code">id của bản ghi ảnh tương ứng</param>
         /// <param name="image">ảnh cần xử lý</param>
         /// <returns>trả về đường dẫn thư mục chứa ảnh</returns>
         /// Created by: PQKHANH(09/09/2022)
-        public async Task<RespondObject> UploadImageService(IFormFile image, Guid id)
+        public async Task<RespondObject> UploadImageService(IFormFile image, string code)
         {
             /// Trả về lỗi nếu ảnh lớn hơn 5Mb
             if(image.Length > 5 * 1024 * 1024)
@@ -177,7 +180,7 @@ namespace MISA.CUKCUK.BLL.Services
             }
 
             // Tạp tên file chứa ảnh
-            string fileName = id.ToString() + ".jpg";
+            string fileName = code + ".jpg";
             // Lấy đường dẫn tới thư mục chứa ảnh
             var pathFolder = Path.Combine(Directory.GetCurrentDirectory(), _configuration["StaticFolder:UploadPath"]);
 

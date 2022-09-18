@@ -36,7 +36,7 @@ namespace MISA.CUKCUK.DAL.Repositories
         /// <param name="sortType">sắp xếp theo chiều nào</param>
         /// <returns>trả về dữ liệu theo yêu cầu, tổng số trang, ....</returns>
         /// Created by: PQKHANH(09/09/2022)
-        public object GetPaging(int pageIndex, int pageSize, string whereClause, string sortBy, string sortType)
+        public  object GetPaging(int pageIndex, int pageSize, string whereClause, string sortBy, string sortType)
         {
             using (mySqlConnection = new MySqlConnection(ConnectionString))
             {
@@ -49,7 +49,7 @@ namespace MISA.CUKCUK.DAL.Repositories
                 parameters.Add("sortBy", sortBy);
                 parameters.Add("sortType", sortType);
 
-                var res = mySqlConnection.QueryMultiple(sql: storeProc, param: parameters, commandType: System.Data.CommandType.StoredProcedure);
+                var res =  mySqlConnection.QueryMultiple(sql: storeProc, param: parameters, commandType: CommandType.StoredProcedure);
 
                 var data = new FilterRespond();
 
@@ -58,9 +58,17 @@ namespace MISA.CUKCUK.DAL.Repositories
 
                 /// lấy dữ liệu các bản ghi
                 data.Data = (List<Food>)res.Read<Food>();
-                
                 /// Lấy tổng số bản ghi
                 data.TotalRecord = (int)res.Read<long>().Single();
+
+                foreach (Food f in data.Data)
+                {
+                    storeProc = "Proc_GetByFoodId_ServiceHobby";
+                    parameters.Add("FoodId", f.FoodId);
+
+                    f.ServiceHobbies = mySqlConnection.Query<FoodServiceHobby>(sql: storeProc, param: parameters, commandType: CommandType.StoredProcedure).ToList();
+                }
+                
                 
                 /// lấy tổng số trang
                 if (data.TotalRecord % pageSize == 0)
@@ -144,22 +152,35 @@ namespace MISA.CUKCUK.DAL.Repositories
                     mySqlConnection.Open();
                 }
 
+                var isSuccess = 1;
+                var storeProc = "Proc_GetByFoodId_ServiceHobby";
+                var parameters = new DynamicParameters();
+                parameters.Add("FoodId", id);
+
+                var res = mySqlConnection.Query<Food>(sql: storeProc, param: parameters, commandType: CommandType.StoredProcedure).ToList();
+
                 using (var transaction = mySqlConnection.BeginTransaction())
                 {
                     try
                     {
-                        var storeProc = "Proc_Delete_FoodServiceHobby_ByFoodId";
+                        
 
-                        var parameters = new DynamicParameters();
-                        parameters.Add("Id", id);
+                        if(res.Count > 0)
+                        {
+                            storeProc = "Proc_Delete_FoodServiceHobby_ByFoodId";
 
-                        var isSuccess = mySqlConnection.Execute(sql: storeProc, param: parameters, transaction: transaction, commandType: CommandType.StoredProcedure);
+                            parameters = new DynamicParameters();
+                            parameters.Add("Id", id);
 
+                            isSuccess = mySqlConnection.Execute(sql: storeProc, param: parameters, transaction: transaction, commandType: CommandType.StoredProcedure);
+
+                        }
                         if (isSuccess > 0)
                         {
                             
                             storeProc = "Proc_Delete_Food";
-
+                            parameters = new DynamicParameters();
+                            parameters.Add("Id", id);
                             isSuccess = mySqlConnection.Execute(sql: storeProc, param: parameters, transaction: transaction, commandType: CommandType.StoredProcedure);
                             if (isSuccess < 0)
                             {

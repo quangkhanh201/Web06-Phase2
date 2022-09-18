@@ -39,8 +39,8 @@ namespace MISA.CUKCUK.Common.Interfaces.Services
         /// Service Upload ảnh
         /// </summary>
         /// <param name="image"> ảnh</param>
-        /// <param name="id"> id bả ghi với anh tương ứng</param>
+        /// <param name="code"> mã món ăn bản ghi với anh tương ứng</param>
         /// <returns>trả về link ảnh cho front end</returns>
-        public Task<RespondObject> UploadImageService(IFormFile image, Guid id);
+        public Task<RespondObject> UploadImageService(IFormFile image, string code);
     }
 }

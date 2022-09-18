@@ -75,12 +75,12 @@ namespace MISA.CUKCUK.Common.Entities
         /// <summary>
         /// hiển thị trên màn hình menu
         /// </summary>
-        public int? showOnMenu { get; set; }
+        public int? ShowOnMenu { get; set; }
 
         /// <summary>
         /// url ảnh đại diện
         /// </summary>
-        public string? imageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         /// <summary>
         /// list danh sách các sở thích phục vụ

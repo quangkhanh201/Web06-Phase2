@@ -35,6 +35,6 @@ namespace MISA.CUKCUK.Common.Entities
         /// <summary>
         /// Phí thu thêm
         /// </summary>
-        public string? Fee { get; set; }
+        public int? Fee { get; set; }
     }
 }

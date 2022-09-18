@@ -4,6 +4,7 @@ using MISA.CUKCUK.Common.Entities;
 using MISA.CUKCUK.Common.Entities.Others;
 using MISA.CUKCUK.Common.Enum;
 using MISA.CUKCUK.Common.Interfaces.Services;
+using MISA.CUKCUK.Common.Resources;
 using Newtonsoft.Json;
 
 namespace MISA.CUKCUK.Api.Controllers
@@ -61,8 +62,12 @@ namespace MISA.CUKCUK.Api.Controllers
         /// <returns>trả về dữ liệu theo yêu cầu, tổng số trang, ....</returns>
         /// Created by: PQKHANH(09/09/2022)
         [HttpPost("Filter")]
-        public IActionResult GetFilter(int pageIndex, int pageSize, FilterObject[] filterObjects, string? sortBy, string? sortType)
+        public IActionResult GetFilter(int pageIndex, int pageSize, FilterObject[]? filterObjects, string? sortBy, string? sortType)
         {
+            if(filterObjects == null)
+            {
+                return Ok(JsonConvert.SerializeObject(new RespondObject(null, false, ErrorCode.NoInput, ResourceVN.ResourceManager.GetString(name: "NoInput"), ""), Formatting.Indented));
+            }
             try
             {
                 var data = _service.ServiceGetPaging(pageIndex, pageSize, filterObjects, sortBy, sortType);
@@ -78,16 +83,16 @@ namespace MISA.CUKCUK.Api.Controllers
         /// <summary>
         /// Xử lý upload ảnh lên backend
         /// </summary>
-        /// <param name="id">id của bản ghi ảnh tương ứng</param>
+        /// <param name="code">mã món ăn của bản ghi ảnh tương ứng</param>
         /// <param name="image">ảnh cần xử lý</param>
         /// <returns>trả về đường dẫn thư mục chứa ảnh</returns>
         /// Created by: PQKHANH(09/09/2022)
         [HttpPost("UploadImage")]
-        public async Task<IActionResult> UploadImage(IFormFile image, Guid id)
+        public async Task<IActionResult> UploadImage(IFormFile image, string code)
         {
             try
             {
-                var res = await _service.UploadImageService(image, id);
+                var res = await _service.UploadImageService(image, code);
                 
                 return Ok(JsonConvert.SerializeObject(res, Formatting.Indented));
             }
