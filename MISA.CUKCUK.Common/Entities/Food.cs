@@ -60,12 +60,12 @@ namespace MISA.CUKCUK.Common.Entities
         /// <summary>
         /// giá bán
         /// </summary>
-        public double? FoodPrice { get; set; }
+        public long? FoodPrice { get; set; }
 
         /// <summary>
         /// giá vốn
         /// </summary>
-        public double? FoodInvest { get; set; }
+        public long? FoodInvest { get; set; }
         
         /// <summary>
         /// mô tả món ăn
